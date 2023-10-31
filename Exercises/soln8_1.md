@@ -5,7 +5,7 @@
 ```python
 # structure.py
 ...
-        
+
 class Structure(metaclass=StructureMeta):
     ...
     def __iter__(self):
@@ -19,7 +19,7 @@ class Structure(metaclass=StructureMeta):
 ```python
 # structure.py
 ...
-        
+
 class Structure(metaclass=StructureMeta):
     ...
     def __eq__(self, other):

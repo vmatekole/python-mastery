@@ -1,6 +1,7 @@
 # coticker.py
 from structure import Structure
-from validate import String, Integer, Float
+from validate import Float, Integer, String
+
 
 class Ticker(Structure):
     name = String()
@@ -13,9 +14,12 @@ class Ticker(Structure):
     low = Float()
     volume = Integer()
 
+
+import csv
+
 from cofollow import consumer, follow, receive
 from tableformat import create_formatter
-import csv
+
 
 @consumer
 def to_csv(target):
@@ -28,11 +32,13 @@ def to_csv(target):
         line = yield from receive(str)
         target.send(next(reader))
 
+
 @consumer
 def create_ticker(target):
     while True:
         row = yield from receive(list)
         target.send(Ticker.from_row(row))
+
 
 @consumer
 def negchange(target):
@@ -40,6 +46,7 @@ def negchange(target):
         record = yield from receive(Ticker)
         if record.change < 0:
             target.send(record)
+
 
 @consumer
 def ticker(fmt, fields):
@@ -50,9 +57,9 @@ def ticker(fmt, fields):
         row = [getattr(rec, name) for name in fields]
         formatter.row(row)
 
+
 if __name__ == '__main__':
-    follow('../../Data/stocklog.csv',
-           to_csv(
-           create_ticker(
-           negchange(
-           ticker('text', ['name','price','change'])))))
+    follow(
+        '../../Data/stocklog.csv',
+        to_csv(create_ticker(negchange(ticker('text', ['name', 'price', 'change'])))),
+    )

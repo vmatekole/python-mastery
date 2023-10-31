@@ -1,8 +1,10 @@
 # stock.py
 
+
 class Stock:
-    __slots__ = ('name','_shares','_price')
+    __slots__ = ('name', '_shares', '_price')
     _types = (str, int, float)
+
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
@@ -16,6 +18,7 @@ class Stock:
     @property
     def shares(self):
         return self._shares
+
     @shares.setter
     def shares(self, value):
         if not isinstance(value, self._types[1]):
@@ -27,6 +30,7 @@ class Stock:
     @property
     def price(self):
         return self._price
+
     @price.setter
     def price(self, value):
         if not isinstance(value, self._types[2]):

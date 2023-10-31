@@ -3,6 +3,7 @@
 import collections
 import csv
 
+
 class DataCollection(collections.abc.Sequence):
     def __init__(self, columns):
         self.column_names = list(columns)
@@ -12,8 +13,7 @@ class DataCollection(collections.abc.Sequence):
         return len(self.column_data[0])
 
     def __getitem__(self, index):
-        return dict(zip(self.column_names,
-                        (col[index] for col in self.column_data)))
+        return dict(zip(self.column_names, (col[index] for col in self.column_data)))
 
 
 def read_csv_as_columns(filename, types):
@@ -24,8 +24,9 @@ def read_csv_as_columns(filename, types):
         for row in rows:
             for name, func, val in zip(headers, types, row):
                 columns[name].append(func(val))
-            
+
     return DataCollection(columns)
+
 
 if __name__ == '__main__':
     import tracemalloc

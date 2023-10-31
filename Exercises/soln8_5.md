@@ -44,7 +44,7 @@ def tcp_server(address, handler):
         yield 'recv', sock
         client, addr = sock.accept()
         tasks.append(handler(client, addr))
-        
+
 def echo_handler(client, address):
     print('Connection from', address)
     while True:

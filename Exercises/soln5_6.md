@@ -20,7 +20,7 @@ class TestStock(unittest.TestCase):
         self.assertEqual(s.name, 'GOOG')
         self.assertEqual(s.shares, 100)
         self.assertEqual(s.price, 490.1)
-        
+
     def test_cost(self):
         s = stock.Stock('GOOG', 100, 490.1)
         self.assertEqual(s.cost, 49010.0)
@@ -69,7 +69,7 @@ class TestStock(unittest.TestCase):
         self.assertEqual(s.name, 'GOOG')
         self.assertEqual(s.shares, 100)
         self.assertEqual(s.price, 490.1)
-        
+
     def test_cost(self):
         s = stock.Stock('GOOG', 100, 490.1)
         self.assertEqual(s.cost, 49010.0)

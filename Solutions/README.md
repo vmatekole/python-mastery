@@ -6,8 +6,3 @@ When taking the course, I would encourage you to try and come up
 with your own solution first.   However, if you're stuck or if
 everything has become broken, you can come here to get a fresh
 copy of code to work with.
-
-
-
-
-

@@ -1,7 +1,9 @@
 # teststock.py
 
-import stock
 import unittest
+
+import stock
+
 
 class TestStock(unittest.TestCase):
     def test_create(self):
@@ -15,7 +17,7 @@ class TestStock(unittest.TestCase):
         self.assertEqual(s.name, 'GOOG')
         self.assertEqual(s.shares, 100)
         self.assertEqual(s.price, 490.1)
-        
+
     def test_cost(self):
         s = stock.Stock('GOOG', 100, 490.1)
         self.assertEqual(s.cost, 49010.0)
@@ -26,7 +28,7 @@ class TestStock(unittest.TestCase):
         self.assertEqual(s.shares, 75)
 
     def test_from_row(self):
-        s = stock.Stock.from_row(['GOOG','100','490.1'])
+        s = stock.Stock.from_row(['GOOG', '100', '490.1'])
         self.assertEqual(s.name, 'GOOG')
         self.assertEqual(s.shares, 100)
         self.assertEqual(s.price, 490.1)
@@ -38,7 +40,7 @@ class TestStock(unittest.TestCase):
     def test_eq(self):
         a = stock.Stock('GOOG', 100, 490.1)
         b = stock.Stock('GOOG', 100, 490.1)
-        self.assertTrue(a==b)
+        self.assertTrue(a == b)
 
     # Tests for failure conditions
     def test_shares_badtype(self):
@@ -65,6 +67,7 @@ class TestStock(unittest.TestCase):
         s = stock.Stock('GOOG', 100, 490.1)
         with self.assertRaises(AttributeError):
             s.share = 100
+
 
 if __name__ == '__main__':
     unittest.main()

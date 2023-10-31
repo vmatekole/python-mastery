@@ -8,7 +8,7 @@ def print_table(records, fields):
     print()
 
     # Print the separator bars
-    print(('-'*10 + ' ')*len(fields))
+    print(('-' * 10 + ' ') * len(fields))
 
     # Output the table contents
     for r in records:

@@ -1,6 +1,6 @@
 # Exercise 7.3 - Solution
 
-Here's a full version of the `structure.py` file.   
+Here's a full version of the `structure.py` file.
 
 ```python
 # structure.py
@@ -69,7 +69,7 @@ def validate_attributes(cls):
     # Create the __init__ method
     if cls._fields:
         cls.create_init()
-    
+
     return cls
 ```
 

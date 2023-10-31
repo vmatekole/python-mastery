@@ -19,7 +19,7 @@ class Structure:
 [source, python]
 ```
 class Structure:
-    ...    
+    ...
     def __repr__(self):
         return '%s(%s)' % (type(self).__name__,
                            ', '.join(repr(getattr(self, name)) for name in self._fields))
@@ -30,7 +30,7 @@ class Structure:
 [source, python]
 ```
 class Structure:
-    ...    
+    ...
     def __setattr__(self, name, value):
         if name.startswith('_') or name in self._fields:
             super().__setattr__(name, value)

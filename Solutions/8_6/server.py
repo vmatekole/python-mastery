@@ -1,12 +1,13 @@
 # server.py
 
-from socket import *
-from select import select
 from collections import deque
+from select import select
+from socket import *
 
 tasks = deque()
-recv_wait = {}   #  sock -> task
-send_wait = {}   #  sock -> task
+recv_wait = {}  #  sock -> task
+send_wait = {}  #  sock -> task
+
 
 def run():
     while any([tasks, recv_wait, send_wait]):
@@ -28,6 +29,7 @@ def run():
         except StopIteration:
             print('Task done')
 
+
 class GenSocket:
     def __init__(self, sock):
         self.sock = sock
@@ -48,6 +50,7 @@ class GenSocket:
     def __getattr__(self, name):
         return getattr(self.sock, name)
 
+
 def tcp_server(address, handler):
     sock = GenSocket(socket(AF_INET, SOCK_STREAM))
     sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -56,7 +59,8 @@ def tcp_server(address, handler):
     while True:
         client, addr = yield from sock.accept()
         tasks.append(handler(client, addr))
-        
+
+
 def echo_handler(client, address):
     print('Connection from', address)
     while True:
@@ -66,7 +70,7 @@ def echo_handler(client, address):
         yield from client.send(b'GOT:' + data)
     print('Connection closed')
 
-if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
 
+if __name__ == '__main__':
+    tasks.append(tcp_server(('', 25000), echo_handler))
+    run()

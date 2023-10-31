@@ -1,7 +1,7 @@
 # Advanced Python Mastery
 
-A course by David Beazley (https://www.dabeaz.com)  
-Copyright (C) 2007-2023  
+A course by David Beazley (https://www.dabeaz.com)
+Copyright (C) 2007-2023
 
 ## Synopsis
 
@@ -12,9 +12,9 @@ Python Cookbook, 3rd Edition (O'Reilly) and Python Distilled
 (Addison-Wesley).  Released under a Creative Commons license.  Free of
 ads, tracking, pop-ups, newsletters, and AI.
 
-## Target Audience 
+## Target Audience
 
-This course is for Python programmers who want to move beyond 
+This course is for Python programmers who want to move beyond
 short scripts to writing more sophisticated programs.  Topics
 focus on programming techniques that get used in popular libraries and
 frameworks. The primary goal is to better understand the Python language
@@ -41,10 +41,10 @@ module imports, the use of Notebooks is not recommended.
 The [`PythonMastery.pdf`](PythonMastery.pdf) file contains detailed
 presentation slides. Course exercises and suggested timings are
 clearly indicated. You'll want to keep this by your side (I recommend
-downloading and viewing it with a local PDF viewer). Start here! 
+downloading and viewing it with a local PDF viewer). Start here!
 
 The [Exercises/](Exercises/index.md) directory has all of the
-course exercises. 
+course exercises.
 
 The [Solutions/](Solutions/) directory has fully worked out solution code.
 
@@ -113,7 +113,7 @@ in a separate course.
 
 **A:** This course was extensively taught pre-pandemic. Post-pandemic,
 my teaching has shifted towards projects and CS fundamentals.
-However, why let a good course just languish on my computer? 
+However, why let a good course just languish on my computer?
 
 **Q: How can I help?**
 
@@ -121,14 +121,8 @@ However, why let a good course just languish on my computer?
 other people about it.
 
 ----
-`>>>` Advanced Python Mastery  
-`...` A course by [dabeaz](https://www.dabeaz.com)  
-`...` Copyright 2007-2023  
+`>>>` Advanced Python Mastery
+`...` A course by [dabeaz](https://www.dabeaz.com)
+`...` Copyright 2007-2023
 
 ![](https://i.creativecommons.org/l/by-sa/4.0/88x31.png). This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
-
-
-
-
-
-

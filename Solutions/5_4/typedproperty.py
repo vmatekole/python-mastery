@@ -1,5 +1,6 @@
 # typedproperty.py
 
+
 def typedproperty(name, expected_type):
     private_name = '_' + name
 
@@ -22,12 +23,13 @@ Float = lambda name: typedproperty(name, float)
 
 # Example
 if __name__ == '__main__':
+
     class Stock:
         name = String('name')
         shares = Integer('shares')
         price = Float('price')
+
         def __init__(self, name, shares, price):
             self.name = name
             self.shares = shares
             self.price = price
-

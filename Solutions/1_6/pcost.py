@@ -1,5 +1,6 @@
 # pcost.py
 
+
 def portfolio_cost(filename):
     total_cost = 0.0
     with open(filename) as f:
@@ -13,7 +14,7 @@ def portfolio_cost(filename):
             # This catches errors in int() and float() conversions above
             except ValueError as e:
                 print("Couldn't parse:", line)
-                print("Reason:", e)
+                print('Reason:', e)
 
     return total_cost
 

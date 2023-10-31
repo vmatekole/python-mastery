@@ -2,6 +2,7 @@
 
 import sys
 
+
 class Structure:
     _fields = ()
 
@@ -19,5 +20,7 @@ class Structure:
             raise AttributeError('No attribute %s' % name)
 
     def __repr__(self):
-        return '%s(%s)' % (type(self).__name__,
-                           ', '.join(repr(getattr(self, name)) for name in self._fields))
+        return '%s(%s)' % (
+            type(self).__name__,
+            ', '.join(repr(getattr(self, name)) for name in self._fields),
+        )

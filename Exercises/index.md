@@ -1,7 +1,7 @@
 # Advanced Python Mastery Exercises
 
-Copyright (C) 2007-2023  
-David M. Beazley  
+Copyright (C) 2007-2023
+David M. Beazley
 https://www.dabeaz.com
 
 This page contains links to all of the course exercises.  For the best experience,

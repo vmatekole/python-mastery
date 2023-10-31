@@ -97,7 +97,7 @@ def tcp_server(address, handler):
     while True:
         client, addr = yield from sock.accept()
         tasks.append(handler(client, addr))
-        
+
 def echo_handler(client, address):
     print('Connection from', address)
     while True:
@@ -177,7 +177,7 @@ async def tcp_server(address, handler):
     while True:
         client, addr = await sock.accept()
         tasks.append(handler(client, addr))
-        
+
 async def echo_handler(client, address):
     print('Connection from', address)
     while True:

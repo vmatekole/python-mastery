@@ -1,8 +1,10 @@
 # stock.py
 
+
 class Stock:
-    __slots__ = ('name','_shares','_price')
+    __slots__ = ('name', '_shares', '_price')
     _types = (str, int, float)
+
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
@@ -13,8 +15,10 @@ class Stock:
         return f'{type(self).__name__}({self.name!r}, {self.shares!r}, {self.price!r})'
 
     def __eq__(self, other):
-        return isinstance(other, Stock) and ((self.name, self.shares, self.price) ==
-                (other.name, other.shares, other.price))
+        return isinstance(other, Stock) and (
+            (self.name, self.shares, self.price)
+            == (other.name, other.shares, other.price)
+        )
 
     @classmethod
     def from_row(cls, row):
@@ -24,6 +28,7 @@ class Stock:
     @property
     def shares(self):
         return self._shares
+
     @shares.setter
     def shares(self, value):
         if not isinstance(value, self._types[1]):
@@ -35,6 +40,7 @@ class Stock:
     @property
     def price(self):
         return self._price
+
     @price.setter
     def price(self, value):
         if not isinstance(value, self._types[2]):

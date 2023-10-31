@@ -38,9 +38,9 @@ def read_rides_as_dicts(filename):
             daytype = row[2]
             rides = int(row[3])
             record = {
-                'route': route, 
-                'date': date, 
-                'daytype': daytype, 
+                'route': route,
+                'date': date,
+                'daytype': daytype,
                 'rides' : rides
                 }
             records.append(record)
@@ -100,7 +100,7 @@ class RideData(collections.abc.Sequence):
         self.dates = []
         self.daytypes = []
         self.numrides = []
-        
+
     def __len__(self):
         # All lists assumed to have the same length
         return len(self.routes)
@@ -110,7 +110,7 @@ class RideData(collections.abc.Sequence):
         self.dates.append(d['date'])
         self.daytypes.append(d['daytype'])
         self.numrides.append(d['rides'])
-        
+
     def __getitem__(self, index):
         return { 'route': self.routes[index],
                  'date': self.dates[index],

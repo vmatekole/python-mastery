@@ -42,7 +42,7 @@ logged = logformat('Calling {func.__name__}')
 
 ## (c) Decorators and methods
 
-You can get the code to work if you interchange the order of the 
+You can get the code to work if you interchange the order of the
 decorators.  For example:
 
 ```python

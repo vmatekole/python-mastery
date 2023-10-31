@@ -14,7 +14,7 @@ class MutInt:
 
     def __str__(self):
         return str(self.value)
-    
+
     def __repr__(self):
         return f'MutInt({self.value!r})'
 

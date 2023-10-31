@@ -39,7 +39,7 @@ if __name__ == '__main__':
     import tableformat
     import reader
     portfolio = read_portfolio('Data/portfolio.csv')
-    
+
     # Generalized version
     # portfolio = reader.read_csv_as_instances('Data/portfolio.csv', Stock)
     tableformat.print_table(portfolio, ['name', 'shares', 'price'])

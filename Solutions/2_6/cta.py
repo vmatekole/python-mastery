@@ -1,26 +1,30 @@
 # cta.py
 
-from collections import defaultdict, Counter
-import tracemalloc
 import csv
 import sys
+import tracemalloc
+from collections import Counter, defaultdict
 
 tracemalloc.start()
 
 if True:
     # Part (b)
     import reader
-    rows = reader.read_csv_as_dicts('../../Data/ctabus.csv',
-                                    [sys.intern, sys.intern, sys.intern, int])
+
+    rows = reader.read_csv_as_dicts(
+        '../../Data/ctabus.csv', [sys.intern, sys.intern, sys.intern, int]
+    )
 else:
     # Part (d) - Challenge
     import colreader
-    rows = colreader.read_csv_as_columns('../../Data/ctabus.csv', 
-                                         [sys.intern, sys.intern, sys.intern, int])
+
+    rows = colreader.read_csv_as_columns(
+        '../../Data/ctabus.csv', [sys.intern, sys.intern, sys.intern, int]
+    )
 
 # --------------------------------------------------
 # Question 1:  How many bus routes are in Chicago?
-# Solution: Use a set to get unique values. 
+# Solution: Use a set to get unique values.
 
 routes = set()
 for row in rows:

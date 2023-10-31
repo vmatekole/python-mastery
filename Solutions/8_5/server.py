@@ -1,12 +1,13 @@
 # server.py
 
-from socket import *
-from select import select
 from collections import deque
+from select import select
+from socket import *
 
 tasks = deque()
-recv_wait = {}   #  sock -> task
-send_wait = {}   #  sock -> task
+recv_wait = {}  #  sock -> task
+send_wait = {}  #  sock -> task
+
 
 def run():
     while any([tasks, recv_wait, send_wait]):
@@ -28,6 +29,7 @@ def run():
         except StopIteration:
             print('Task done')
 
+
 def tcp_server(address, handler):
     sock = socket(AF_INET, SOCK_STREAM)
     sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -37,7 +39,8 @@ def tcp_server(address, handler):
         yield 'recv', sock
         client, addr = sock.accept()
         tasks.append(handler(client, addr))
-        
+
+
 def echo_handler(client, address):
     print('Connection from', address)
     while True:
@@ -49,7 +52,7 @@ def echo_handler(client, address):
         client.send(b'GOT:' + data)
     print('Connection closed')
 
-if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
 
+if __name__ == '__main__':
+    tasks.append(tcp_server(('', 25000), echo_handler))
+    run()

@@ -1,5 +1,6 @@
 # validate.py
 
+
 class Validator:
     def __init__(self, name=None):
         self.name = name
@@ -14,21 +15,23 @@ class Validator:
     def __set__(self, instance, value):
         instance.__dict__[self.name] = self.check(value)
 
+
 class Typed(Validator):
     expected_type = object
+
     @classmethod
     def check(cls, value):
         if not isinstance(value, cls.expected_type):
             raise TypeError(f'expected {cls.expected_type}')
         return super().check(value)
 
-_typed_classes = [
-    ('Integer', int),
-    ('Float', float),
-    ('String', str) ]
 
-globals().update((name, type(name, (Typed,), {'expected_type':ty}))
-                 for name, ty in _typed_classes)
+_typed_classes = [('Integer', int), ('Float', float), ('String', str)]
+
+globals().update(
+    (name, type(name, (Typed,), {'expected_type': ty})) for name, ty in _typed_classes
+)
+
 
 class Positive(Validator):
     @classmethod
@@ -37,6 +40,7 @@ class Positive(Validator):
             raise ValueError('must be >= 0')
         return super().check(value)
 
+
 class NonEmpty(Validator):
     @classmethod
     def check(cls, value):
@@ -44,27 +48,34 @@ class NonEmpty(Validator):
             raise ValueError('must be non-empty')
         return super().check(value)
 
+
 class PositiveInteger(Integer, Positive):
     pass
+
 
 class PositiveFloat(Float, Positive):
     pass
 
+
 class NonEmptyString(String, NonEmpty):
     pass
 
-from inspect import signature
+
 from functools import wraps
+from inspect import signature
+
 
 def isvalidator(item):
     return isinstance(item, type) and issubclass(item, Validator)
+
 
 def validated(func):
     sig = signature(func)
 
     # Gather the function annotations
-    annotations = { name:val for name, val in func.__annotations__.items()
-                    if isvalidator(val) }
+    annotations = {
+        name: val for name, val in func.__annotations__.items() if isvalidator(val)
+    }
 
     # Get the return annotation (if any)
     retcheck = annotations.pop('return', None)
@@ -96,6 +107,7 @@ def validated(func):
 
     return wrapper
 
+
 def enforce(**annotations):
     retcheck = annotations.pop('return_', None)
 
@@ -125,17 +137,21 @@ def enforce(**annotations):
                 except Exception as e:
                     raise TypeError(f'Bad return: {e}') from None
             return result
+
         return wrapper
+
     return decorate
+
 
 # Examples
 if __name__ == '__main__':
+
     @validated
-    def add(x:Integer, y:Integer) -> Integer:
+    def add(x: Integer, y: Integer) -> Integer:
         return x + y
 
     @validated
-    def div(x:Integer, y:Integer) -> Integer:
+    def div(x: Integer, y: Integer) -> Integer:
         return x / y
 
     @enforce(x=Integer, y=Integer)
@@ -146,6 +162,7 @@ if __name__ == '__main__':
         name = NonEmptyString()
         shares = PositiveInteger()
         price = PositiveFloat()
+
         def __init__(self, name, shares, price):
             self.name = name
             self.shares = shares
@@ -159,9 +176,5 @@ if __name__ == '__main__':
             return self.shares * self.price
 
         @validated
-        def sell(self, nshares:PositiveInteger):
+        def sell(self, nshares: PositiveInteger):
             self.shares -= nshares
-
-    
-
-    

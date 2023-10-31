@@ -4,6 +4,7 @@
 
 from functools import total_ordering
 
+
 @total_ordering
 class MutInt:
     __slots__ = ['value']
@@ -13,7 +14,7 @@ class MutInt:
 
     def __str__(self):
         return str(self.value)
-    
+
     def __repr__(self):
         return f'MutInt({self.value!r})'
 
@@ -70,5 +71,3 @@ class MutInt:
 
     # Support for indexing s[MutInt]
     __index__ = __int__
-
-    

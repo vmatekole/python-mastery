@@ -36,9 +36,9 @@ def read_rides_as_dicts(filename):
             daytype = row[2]
             rides = int(row[3])
             record = {
-                'route': route, 
-                'date': date, 
-                'daytype': daytype, 
+                'route': route,
+                'date': date,
+                'daytype': daytype,
                 'rides' : rides
                 }
             records.append(record)
