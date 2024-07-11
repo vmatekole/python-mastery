@@ -16,19 +16,20 @@ def portfolio_cost(input_file: str) -> float:
         for line in f:
             stock, amt, price = line.split()
             try:
-                subtotal = (int(amt) * float(price))
+                subtotal = int(amt) * float(price)
                 table.append((stock, amt, price, subtotal))
                 total_cost += subtotal
             except ValueError as e:
-                print(f'Couldn\'t parse {e}')
+                print(f"Couldn't parse {e}")
 
     with open('./portfolio_with_amt.data', 'w') as fw:
         for entry in table:
-            row: str = f'\n{entry[0]} {entry[1]} {entry[2]} {entry[3]:.2f}'
+            row: str = f"\n{entry[0]} {entry[1]} {entry[2]} {entry[3]:.2f}"
             print(row)
             fw.write(row)
 
     return total_cost
 
+
 if __name__ == '__main__':
-    print(f'\nTotal cost: {portfolio_cost("../Data/portfolio2.dat"):.2f}')
+    print(f'\nTotal cost: {portfolio_cost('../Data/portfolio2.dat'):.2f}')

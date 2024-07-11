@@ -11,12 +11,9 @@ from rich import print
 s = set({1, 2, 4})
 a = [1, 2, 4]
 
-d = {
-    (1, 2): "Victor",
-    (3, 4): "John"
-}
+d = {(1, 2): 'Victor', (3, 4): 'John'}
 # print(7 in a)
 # print(s)
 print(d)
 
-print((1,6) in d)
+print((1, 6) in d)

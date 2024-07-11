@@ -10,7 +10,7 @@ class Typed(Validator):
     @classmethod
     def check(cls, value):
         if not isinstance(value, cls.expected_type):
-            raise TypeError(f'Expected {cls.expected_type}')
+            raise TypeError(f"Expected {cls.expected_type}")
         return super().check(value)
 
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
             self.price = price
 
         def __repr__(self):
-            return f'Stock({self.name!r}, {self.shares!r}, {self.price!r})'
+            return f"Stock({self.name!r}, {self.shares!r}, {self.price!r})"
 
         @property
         def shares(self):

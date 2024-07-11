@@ -11,7 +11,7 @@ def typedproperty(name, expected_type):
     @value.setter
     def value(self, val):
         if not isinstance(val, expected_type):
-            raise TypeError(f'Expected {expected_type}')
+            raise TypeError(f"Expected {expected_type}")
         setattr(self, private_name, val)
 
     return value

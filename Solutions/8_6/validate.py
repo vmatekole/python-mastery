@@ -29,7 +29,7 @@ class Typed(Validator):
     @classmethod
     def check(cls, value):
         if not isinstance(value, cls.expected_type):
-            raise TypeError(f'expected {cls.expected_type}')
+            raise TypeError(f"expected {cls.expected_type}")
         return super().check(value)
 
 
@@ -97,7 +97,7 @@ def validated(func):
             try:
                 validator.check(bound.arguments[name])
             except Exception as e:
-                errors.append(f'  {name}: {e}')
+                errors.append(f"  {name}: {e}")
 
         if errors:
             raise TypeError('Bad Arguments\n' + '\n'.join(errors))
@@ -109,7 +109,7 @@ def validated(func):
             try:
                 retcheck.check(result)
             except Exception as e:
-                raise TypeError(f'Bad return: {e}') from None
+                raise TypeError(f"Bad return: {e}") from None
         return result
 
     return wrapper
@@ -131,7 +131,7 @@ def enforce(**annotations):
                 try:
                     validator.check(bound.arguments[name])
                 except Exception as e:
-                    errors.append(f'    {name}: {e}')
+                    errors.append(f"    {name}: {e}")
 
             if errors:
                 raise TypeError('Bad Arguments\n' + '\n'.join(errors))
@@ -142,7 +142,7 @@ def enforce(**annotations):
                 try:
                     retcheck.check(result)
                 except Exception as e:
-                    raise TypeError(f'Bad return: {e}') from None
+                    raise TypeError(f"Bad return: {e}") from None
             return result
 
         return wrapper
@@ -176,7 +176,7 @@ if __name__ == '__main__':
             self.price = price
 
         def __repr__(self):
-            return f'Stock({self.name!r}, {self.shares!r}, {self.price!r})'
+            return f"Stock({self.name!r}, {self.shares!r}, {self.price!r})"
 
         @property
         def cost(self):

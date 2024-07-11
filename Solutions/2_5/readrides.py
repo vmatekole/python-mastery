@@ -1,6 +1,8 @@
 # readrides.py
 
+from collections.abc import Sequence
 import csv
+
 
 
 def read_rides_as_tuples(filename):
@@ -92,7 +94,7 @@ def read_rides_as_columns(filename):
 import collections
 
 
-class RideData(collections.abc.Sequence):
+class RideData(Sequence):
     def __init__(self):
         # Each value is a list with all of the values (a column)
         self.routes = []
@@ -142,7 +144,7 @@ if __name__ == '__main__':
     import tracemalloc
 
     tracemalloc.start()
-    read_rides = read_rides_as_dicts  # Change to as_dicts, as_instances, etc.
+    read_rides = read_rides_as_instances  # Change to as_dicts, as_instances, etc.
     rides = read_rides('../../Data/ctabus.csv')
 
     print('Memory Use: Current %d, Peak %d' % tracemalloc.get_traced_memory())

@@ -44,7 +44,7 @@ class UpperHeadersMixin:
 
 def create_formatter(name, column_formats=None, upper_headers=False):
     if name not in TableFormatter._formats:
-        __import__(f'{__package__}.formats.{name}')
+        __import__(f"{__package__}.formats.{name}")
 
     formatter_cls = TableFormatter._formats.get(name)
     if not formatter_cls:

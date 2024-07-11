@@ -30,9 +30,9 @@ class Structure:
         Create an __init__ method from _fields
         """
         args = ','.join(cls._fields)
-        code = f'def __init__(self, {args}):\n'
+        code = f"def __init__(self, {args}):\n"
         for name in cls._fields:
-            code += f'    self.{name} = {name}\n'
+            code += f"    self.{name} = {name}\n"
         locs = {}
         exec(code, locs)
         cls.__init__ = locs['__init__']

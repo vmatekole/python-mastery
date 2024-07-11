@@ -1,8 +1,7 @@
 # readrides.py
 
-from collections import namedtuple
 import csv
-
+from collections import namedtuple
 
 
 def read_rides_as_tuples(filename):
@@ -53,7 +52,7 @@ class Row:
 
 # Uncomment to use a namedtuple instead
 # from collections import namedtuple
-Row = namedtuple('Row',('route','date','daytype','rides'))
+Row = namedtuple('Row', ('route', 'date', 'daytype', 'rides'))
 
 
 def read_rides_as_instances(filename):
