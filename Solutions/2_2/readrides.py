@@ -1,6 +1,8 @@
 # readrides.py
 
+from collections import namedtuple
 import csv
+
 
 
 def read_rides_as_tuples(filename):
@@ -51,7 +53,7 @@ class Row:
 
 # Uncomment to use a namedtuple instead
 # from collections import namedtuple
-# Row = namedtuple('Row',('route','date','daytype','rides'))
+Row = namedtuple('Row',('route','date','daytype','rides'))
 
 
 def read_rides_as_instances(filename):
@@ -76,7 +78,7 @@ if __name__ == '__main__':
     import tracemalloc
 
     tracemalloc.start()
-    read_rides = read_rides_as_tuples  # Change to as_dicts, as_instances, etc.
+    read_rides = read_rides_as_instances  # Change to as_dicts, as_instances, etc.
     rides = read_rides('../../Data/ctabus.csv')
 
     print('Memory Use: Current %d, Peak %d' % tracemalloc.get_traced_memory())
