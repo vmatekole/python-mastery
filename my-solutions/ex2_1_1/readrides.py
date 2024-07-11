@@ -1,14 +1,16 @@
 # readrides.py
 
 import csv
-from datetime import datetime
+from datetime import datetime, date
 import tracemalloc
 from collections import namedtuple
 
-from attr import dataclass
-from pydantic import BaseModel
+from dataclasses import dataclass
+from pydantic import BaseModel, field_validator
 from rich import print
 import sys
+
+
 
 
 def ride_record(ride):
@@ -17,30 +19,45 @@ def ride_record(ride):
 
 def store_as_dict(records: list[any]) -> any:
 
-    return list(map(ride_record, records))
+    return [ride_record(ride) for ride in records]
 
 
 def store_as_dataclass(records: list[any]):
 
     @dataclass
-    class RowDataclass(BaseModel):
+    class RowDataclass():
         route: int
         date: datetime
         daytype: str
         rides: int
 
-    return map(lambda ride: RowDataclass(ride[0], ride[1], ride[2], ride[3]), records)
+    return [RowDataclass(ride[0], ride[1], ride[2], ride[3]) for ride in records]
 
 
 def store_as_pydantic_objs(records: list[any]):
 
     class RowPydantic(BaseModel):
-        route: int
-        date: datetime
+        route: str
+        date: date
         daytype: str
         rides: int
 
-    return map(lambda ride: RowPydantic(ride[0], ride[1], ride[2], ride[3]), records)
+    
+        @field_validator('date', mode='before')
+        def parse_date(cls, value):
+            if isinstance(value, date):
+                return value
+            try:
+                # Assuming the date format is DD/MM/YYYY
+                d = datetime.strptime(value, '%m/%d/%Y').date()
+
+
+                return d
+            except ValueError:
+                raise ValueError("Incorrect date format, should be DD/MM/YYYY")
+    
+
+    return [RowPydantic(route=ride[0], date=ride[1], daytype=ride[2], rides=ride[3]) for ride in records]
 
 
 def store_as_objs(records: list[any]) -> any:
@@ -52,7 +69,7 @@ def store_as_objs(records: list[any]) -> any:
             self.daytype = daytype
             self.rides = rides
 
-    return map(lambda ride: Row(ride[0], ride[1], ride[2], ride[3]), records)
+    return [Row(ride[0], ride[1], ride[2], ride[3]) for ride in records]
 
 
 def store_as_tuples(records: list[any]) -> any:
@@ -63,25 +80,19 @@ def store_as_named_tuple(records: list[any]) -> list[any]:
 
     Row = namedtuple('Row', ['route', 'date', 'daytype', 'rides'])
 
-    return map(
-        lambda ride: Row(route=ride[0], date=ride[1],
-                         daytype=ride[2], rides=ride[3]),
-        records,
-    )
+    return [Row(route=ride[0], date=ride[1], daytype=ride[2], rides=ride[3]) for ride in records]
 
 
-def memory_status(type: str, m: map, last_memstatus: int) -> None:
+def memory_status(type: str, l: list) -> None:
     current, peak = tracemalloc.get_traced_memory()
-    delta = current - last_memstatus
     MB = 1024 * 1024
-    KB = 1024
-    print(f"Memory Use of {type}: Current %dkb, Peak %dkb" %
-          (delta / KB, peak / KB))
-    # l = list(m)
-    # list_size = sys.getsizeof(sum(o) for o in l)
-    # print(f'Size of list: {list_size}')
-    print(f'Current {current} Peak:{peak}')
-    return current, peak
+    print(f"Memory Use of {type}: Current %dmb, Peak %dmb" %
+          (current / MB, peak / MB))
+
+    # t =  sum([sys.getsizeof(t) / MB for t in l])
+    # list_size = t
+    # print(f'Size of list: {list_size}MB')
+    # print(f'Current {current} Peak:{peak}')
 
 
 def read_rides(filename: str) -> list[any]:
@@ -106,21 +117,28 @@ if __name__ == '__main__':
     tracemalloc.start()
     records = read_rides('../Data/ctabus.csv')
 
-    start, _ = tracemalloc.get_traced_memory()
     l = store_as_dict(records)
-    current, _ = memory_status('Dict', l, start)
+    memory_status('Dict', l)
     
     l = store_as_objs(records)
-    current, _ = memory_status('Objs', l, current)
+    memory_status('Objs', l)
 
     l = store_as_named_tuple(records)
-    current, _ = memory_status('Named tuples', l, current)
+    memory_status('Named tuples', l)
 
     l = store_as_tuples(records)
-    current, _ = memory_status('Tuples', l, current)
+    memory_status('Tuples', l)
 
     l = store_as_pydantic_objs(records)
-    current, _ = memory_status('Pydantic Objs', l, current)
+    memory_status('Pydantic Objs', l)
 
     l = store_as_dataclass(records)        
-    current, _ = memory_status('Dataclass Objs', l, current)
+    memory_status('Dataclass Objs', l)
+
+    # snapshot = tracemalloc.take_snapshot()
+
+    # for s in snapshot.statistics('lineno'):
+    #     print(s)
+
+
+
