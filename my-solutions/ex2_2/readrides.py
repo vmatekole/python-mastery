@@ -49,3 +49,4 @@ if __name__ == '__main__':
 
     print(f'Number of routes: {len(totals)}')
     print(f'Number of rides on 22 bus on 02/02/2001: {total_rides_by_bus_date(l,'22',datetime.date(2001,2,2))}')
+    print(f'Number of rides on each bus route: {totals}')
