@@ -82,6 +82,16 @@ def store_as_named_tuple(records: list[any]) -> list[any]:
 
     return [Row(route=ride[0], date=ride[1], daytype=ride[2], rides=ride[3]) for ride in records]
 
+def store_as_slots(records: list[any]):
+    class RowSlot:
+        __slots__ = ['route', 'date', 'daytype', 'rides']
+        def __init__(self, route, date, daytype, rides):
+            self.route = route
+            self.date = date
+            self.daytype = daytype
+            self.rides = rides
+    
+    return [RowSlot(route=ride[0],date=ride[1], daytype=ride[2], rides=ride[3]) for ride in records]
 
 def memory_status(type: str, l: list) -> None:
     current, peak = tracemalloc.get_traced_memory()
@@ -111,6 +121,7 @@ def read_rides(filename: str) -> list[any]:
             records.append((route, date, daytype, rides))
     return records
 
+
 if __name__ == '__main__':
     import tracemalloc
 
@@ -134,6 +145,9 @@ if __name__ == '__main__':
 
     l = store_as_dataclass(records)        
     memory_status('Dataclass Objs', l)
+
+    l = store_as_slots(records)        
+    memory_status('Slots', l)
 
     # snapshot = tracemalloc.take_snapshot()
 
