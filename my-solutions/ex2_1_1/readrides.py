@@ -89,10 +89,10 @@ def memory_status(type: str, l: list) -> None:
     print(f"Memory Use of {type}: Current %dmb, Peak %dmb" %
           (current / MB, peak / MB))
 
-    # t =  sum([sys.getsizeof(t) / MB for t in l])
-    # list_size = t
-    # print(f'Size of list: {list_size}MB')
-    # print(f'Current {current} Peak:{peak}')
+    t =  sum([sys.getsizeof(t) / MB for t in l])
+    list_size = t
+    print(f'Size of list: {list_size}mb')
+    print(f'Current {current} Peak:{peak}')
 
 
 def read_rides(filename: str) -> list[any]:
