@@ -21,26 +21,18 @@ def read_portfolio(filename):
 
 
 if __name__ == '__main__':
-    p = read_portfolio('../Data/portfolio.csv')
-    print(p)
-
-
+    portfolio = read_portfolio('../Data/portfolio.csv')
     totals = Counter()
-
-
-    for s in p:
+    for s in portfolio:
         totals[s['name']] += s['shares']
 
     more = Counter()
-
     more['IBM'] = 75
     more['AA'] = 100
     more['ACME'] = 20
 
-
     byname = defaultdict(list)
-
-    for s in p:
+    for s in portfolio:
         byname[s['name']].append(s)
 
     print(byname)
