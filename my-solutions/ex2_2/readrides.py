@@ -1,71 +1,74 @@
 # readrides.py
 
+from calendar import month
 import csv
 from collections import defaultdict
+import itertools
+import time
 from typing import Counter
 import datetime
 from rich import print
 
+
 def store_as_slots(records: list[any]):
     class RowSlot:
-        __slots__ = ['route', 'date', 'daytype', 'rides']
+        # __slots__ = ['route', 'date', 'daytype', 'rides']
         def __init__(self, route, date, daytype, rides):
             self.route = route
             self.date = date
             self.daytype = daytype
             self.rides = rides
-    
-    return [RowSlot(route=ride[0],date=ride[1], daytype=ride[2], rides=ride[3]) for ride in records]
 
-def read_rides(filename: str) -> list[any]:
+    return [RowSlot(route=ride[0], date=ride[1][0], daytype=ride[1][1], rides=ride[1][2]) for ride in records]
+
+
+def read_rides(filename: str):
     """
     Read the bus ride data as a list of tuples
     """
-    records = []
+    records = defaultdict(list)
     with open(filename) as f:
         rows = csv.reader(f)
         headings = next(rows)  # Skip headers
+        # t = list(itertools.islice(rows, 10000))
         for row in rows:
             route = row[0]
-            date: datetime.date = datetime.datetime.strptime(row[1], '%m/%d/%Y').date()
+            date: datetime.date = datetime.datetime.strptime(
+                row[1], '%m/%d/%Y').date().strftime('%d/%m/%Y')
             daytype = row[2]
             rides = int(row[3])
-            records.append((route, date, daytype, rides))
+            if not records[route]:
+                records[route] =  {}
+                records[route]['monthly_trips'] =  {}
+            records[route]['monthly_trips'][date] = {'daytype': daytype, 'rides': rides}
     return records
 
-def total_rides_by_bus_date(records, route, date):
-    return len([ride for ride in records if ride.route == route and ride.date == date])
+if __name__ == '__main__':    
+    trips = read_rides('../Data/ctabus.csv')
 
-def total_rides_by_bus_year(records, route, year):
-    return len([ride for ride in records if ride.route == route and ride.date.year == year])
+    annual_trips = {}
+    total_trips_per_route = Counter()
 
+    for route in trips.keys():
+        for date in trips[route]['monthly_trips'].keys(): 
+            year =  date[-4:] # 01/01/2001 - parse the year
+            
+            if route not in annual_trips:
+                annual_trips[route] = {} 
+            if year not in annual_trips[route]:
+                annual_trips[route][str(year)] = 0
 
-if __name__ == '__main__':
-    records = read_rides('../Data/ctabus.csv')
-    rides = store_as_slots(records)
+            annual_trips[route][str(year)] = sum(trips[route]['monthly_trips'][date]['rides']  for date in trips[route]['monthly_trips'].keys() if date.endswith(str(year)))         
+        total_trips_per_route[route] = sum(annual_trips[route].values())
+        print(f'Processed {len(total_trips_per_route)} of {len(trips.keys())} routes...')
+            
 
-    byroute = defaultdict(list) 
-
-    route_totals: Counter = Counter()
-    for r in rides:
-        route_totals[r.route] += 1
-
-    for y in range(2001,2012):
-        for r in route_totals.keys():
-            byroute[r].append({'num_rides': total_rides_by_bus_year(rides,r,y), 'year': y})
-    
     ten_yr_delta = Counter()
+    
+    for route in annual_trips:
+        ten_yr_delta[route] = max(annual_trips[route].values()) - min(annual_trips[route].values())
 
-    for route in route_totals.keys():
-        num_rides = lambda x: x['num_rides']
-        ten_yr_delta[route] = max(byroute[route], key=num_rides)['num_rides'] - min(byroute[route], key=num_rides)['num_rides']
-
-    yearly_totals = []    
-    for ride in rides:
-        yearly_totals.append({'route': ride.route, 'total': route_totals[ride.route]})
-
-    print(route_totals)
-    print(f'Number of routes: {len(route_totals)}')
-    print(f'Number of rides on 22 bus on 02/02/2001: {total_rides_by_bus_date(rides,'22',datetime.date(2001,2,2))}')
-    print(f'Number of rides on each bus route: {route_totals}')
+    print(f'Number of routes: {len(trips.keys())}')
+    print(f'Number of rides on 22 bus on 02/02/2011: {trips["22"]["monthly_trips"]["02/02/2011"]}')
+    print(f'Number of rides on each bus route: {total_trips_per_route}')
     print(f'Five routes with biggest ten yr increase: {ten_yr_delta.most_common(5)}')
