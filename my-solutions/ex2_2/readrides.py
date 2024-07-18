@@ -60,13 +60,18 @@ if __name__ == '__main__':
 
             annual_trips[route][str(year)] = sum(trips[route]['monthly_trips'][date]['rides']  for date in trips[route]['monthly_trips'].keys() if date.endswith(str(year)))         
         total_trips_per_route[route] = sum(annual_trips[route].values())
-        print(f'Processed {len(total_trips_per_route)} of {len(trips.keys())} routes...')
+        print(f'Processed {len(total_trips_per_route)} of {len(trips.keys())} routes...', end='\r')
             
 
     ten_yr_delta = Counter()
     
     for route in annual_trips:
-        ten_yr_delta[route] = max(annual_trips[route].values()) - min(annual_trips[route].values())
+        trips_2001_2010 = [annual_trips[route][year] for year in annual_trips[route].keys() if int(year) > 2001 and int(year) < 2010]
+        if trips_2001_2010:
+            max_num_trips = max(trips_2001_2010) 
+            min_num_trips = min(trips_2001_2010)
+
+        ten_yr_delta[route] = f'Increase in trips 2001-2010 {max_num_trips-min_num_trips}. Percentage increase {((min_num_trips/max_num_trips)*100):.2f}%'
 
     print(f'Number of routes: {len(trips.keys())}')
     print(f'Number of rides on 22 bus on 02/02/2011: {trips["22"]["monthly_trips"]["02/02/2011"]}')
