@@ -71,7 +71,7 @@ if __name__ == '__main__':
             max_num_trips = max(trips_2001_2010) 
             min_num_trips = min(trips_2001_2010)
 
-        ten_yr_delta[route] = f'Increase in trips 2001-2010 {max_num_trips-min_num_trips}. Percentage increase {((min_num_trips/max_num_trips)*100):.2f}%'
+        ten_yr_delta[route] = f'Increase in trips between 2001-2010: {max_num_trips-min_num_trips}. Percentage increase: {((min_num_trips/max_num_trips)*100):.2f}%'
 
     print(f'Number of routes: {len(trips.keys())}')
     print(f'Number of rides on 22 bus on 02/02/2011: {trips["22"]["monthly_trips"]["02/02/2011"]}')
